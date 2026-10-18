@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bruma-Verde · Alquimia de Cogumelos</title>
+<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=IM+Fell+English&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--wood:#5a3a1e;--wood2:#3b2512;--parch:#ead9ae;--ink:#3b2a14;--gold:#e6b94a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;font-family:'IM Fell English',Georgia,serif;color:var(--parch);background:linear-gradient(#1b3042,#14261f 40%,#0a140f) fixed;overflow-x:hidden}
+h1,h2,.t,.btn{font-family:'MedievalSharp','IM Fell English',Georgia,serif;font-weight:400;margin:0}
+.moon{position:fixed;top:24px;right:7%;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fffbe0,#e9dfa8);box-shadow:0 0 70px 24px #f4ecc833;pointer-events:none}
+.ff{position:fixed;width:5px;height:5px;border-radius:50%;background:#ffe98a;box-shadow:0 0 10px 4px #ffe98a88;animation:fly 9s ease-in-out infinite;pointer-events:none;z-index:1}
+@keyframes fly{0%,100%{transform:translate(0,0);opacity:.2}50%{transform:translate(30px,-40px);opacity:1}}
+header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px 18px;background:linear-gradient(var(--wood),var(--wood2));border-bottom:4px solid #2a1a0a;box-shadow:0 4px 0 #0006;position:relative;z-index:3}
+h1{font-size:28px;color:var(--gold);text-shadow:0 2px 0 #000,0 0 14px #e6b94a55}
+.stats{display:flex;gap:10px;align-items:center}
+.pill{background:#241608;border:2px solid var(--gold);border-radius:20px;padding:3px 14px;font-size:17px;box-shadow:inset 0 0 8px #000}
+#scene{display:block;width:100%;height:110px;margin-bottom:-30px}
+main{max-width:1150px;margin:0 auto;padding:0 14px 30px;display:grid;grid-template-columns:1.25fr 1fr;gap:16px;position:relative;z-index:2}
+@media(max-width:820px){main{grid-template-columns:1fr}}
+.wide{grid-column:1/-1}
+.panel{background:linear-gradient(#f0e1b8,#e4d09c);color:var(--ink);border:5px solid var(--wood);outline:2px solid #2a1a0a;border-radius:14px;padding:12px 14px;box-shadow:inset 0 0 36px #b8975a99,0 6px 0 #1b0f05,0 12px 22px #0009;position:relative}
+.panel::before,.panel::after{content:"❦";position:absolute;top:-3px;color:#a8741f;font-size:16px}
+.panel::before{left:8px}.panel::after{right:8px}
+.panel h2{font-size:21px;color:#6b3f17;text-align:center;border-bottom:2px dashed #a8844a;padding-bottom:4px;margin-bottom:10px}
+col,.col{display:flex;flex-direction:column;gap:16px}
+.garden{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px;border-radius:12px;background:radial-gradient(circle at 50% 0,#6fae4a,#3f7a34 70%);border:3px solid #2a5a26;box-shadow:inset 0 0 20px #0006}
+.plot{aspect-ratio:1;position:relative;cursor:pointer;border-radius:16px;background:radial-gradient(circle at 50% 70%,#7a5230,#4a2f18 75%);border:4px solid #7a5a32;outline:2px solid #2a1a0a;overflow:hidden;transition:transform .15s}
+.plot:hover{transform:translateY(-3px) rotate(-.6deg)}
+.plot .mound{position:absolute;left:8%;right:8%;bottom:5%;height:32%;border-radius:50%;background:radial-gradient(#5b3a1d,#3a2412);box-shadow:inset 0 5px 0 #7a5230,0 3px 0 #0005}
+.plot .pl{position:absolute;left:14%;width:72%;bottom:15%;transform-origin:50% 100%;transition:transform .7s cubic-bezier(.3,1.6,.5,1);animation:sway 3s ease-in-out infinite}
+@keyframes sway{50%{rotate:3deg}}
+.plot.ready{box-shadow:0 0 20px 4px #ffe07a;animation:glow 1.2s infinite alternate}
+@keyframes glow{to{box-shadow:0 0 30px 8px #ffe07a}}
+.plot.ready::after{content:"✦";position:absolute;top:5px;right:9px;color:#fff3a0;font-size:22px;animation:tw 1s infinite}
+@keyframes tw{50%{opacity:.2;transform:scale(1.5)}}
+.plot.lock{background:repeating-linear-gradient(45deg,#4a3a28,#4a3a28 8px,#3a2c1c 8px,#3a2c1c 16px);display:grid;place-items:center;text-align:center;font-size:14px;color:#e8d4a0;line-height:1.2}
+.plot.lock b{font-size:26px;display:block}
+.bar{position:absolute;left:12%;right:12%;bottom:5px;height:6px;background:#0007;border-radius:3px;border:1px solid #000}
+.bar i{display:block;height:100%;background:linear-gradient(#b6f08a,#6cbf48);border-radius:3px}
+.hint,.small{font-size:14px;opacity:.85}.hint{margin:8px 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:flex;align-items:center;gap:6px;background:#f8edcc;border:2px solid #a8844a;border-radius:12px;padding:3px 10px 3px 4px;cursor:pointer;font-size:15px;color:var(--ink);font-family:inherit;box-shadow:0 2px 0 #8a6a35}
+.chip svg{width:34px;height:34px}
+.chip.sel{background:#fff3b8;border-color:#c0392b;box-shadow:0 0 0 2px #c0392b55,0 2px 0 #8a6a35}
+.chip:disabled{opacity:.4;cursor:default}
+.cauldron{display:flex;flex-direction:column;align-items:center;gap:8px}
+.slots{display:flex;gap:14px;align-items:center}
+.slot{width:64px;height:64px;border-radius:50%;background:radial-gradient(#e6d3a0,#cdb67c);border:3px dashed #8a6a35;display:grid;place-items:center;cursor:pointer}
+.slot svg{width:50px;height:50px}
+.btn{font-size:17px;background:linear-gradient(#8a5a28,#4f2e10);color:var(--gold);border:3px solid #2a1a0a;border-radius:10px;padding:6px 18px;cursor:pointer;box-shadow:0 3px 0 #1b0f05,inset 0 1px 0 #ffffff33}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #1b0f05}
+.btn:disabled{opacity:.45;cursor:default}.btn.s{font-size:14px;padding:2px 10px}
+.pot{display:flex;align-items:center;gap:8px;padding:3px 0;border-bottom:1px dotted #a8844a}
+.pot svg{width:38px;height:38px}.pot span{flex:1}
+.pot.lk{opacity:.55}
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.card{background:linear-gradient(#fbf1d2,#eedba5);border:3px solid #a8844a;border-radius:14px;padding:8px;text-align:center;box-shadow:0 3px 0 #8a6a35;display:flex;flex-direction:column;align-items:center;gap:2px}
+.card svg{width:64px;height:64px;filter:drop-shadow(0 3px 2px #0004)}
+.card b{font-size:15px;line-height:1.1}.card small{opacity:.85}
+.card div{display:flex;gap:6px;margin-top:4px}
+.tag{font-size:11px;background:#6b3f17;color:#f6e7b8;border-radius:8px;padding:0 7px}
+.bubble{animation:bub 1s ease-in infinite}
+@keyframes bub{0%{transform:translateY(0);opacity:0}30%{opacity:1}100%{transform:translateY(-14px);opacity:0}}
+.flame{animation:fl .4s ease-in-out infinite alternate;transform-origin:50% 100%}
+@keyframes fl{to{transform:scaleY(1.25) scaleX(.9)}}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#241608;border:2px solid var(--gold);border-radius:12px;padding:8px 18px;z-index:30;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center}
+.toast.on{opacity:1}
+.modal{position:fixed;inset:0;background:#000b;display:grid;place-items:center;z-index:20;padding:16px}
+.modal .panel{max-width:520px;text-align:center;font-size:18px;line-height:1.45}
+.modal h2{font-size:26px}
+.panel{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .27 0 0 0 0 .1 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E"),linear-gradient(#f0e1b8,#e4d09c)}
+.panel h2::before{content:"⚜ ";color:#c08a2a}.panel h2::after{content:" ⚜";color:#c08a2a}
+.slots{flex-wrap:wrap;justify-content:center;gap:8px}
+.cz{transition:.5s}.big .cz{width:250px;animation:pul 2s infinite alternate}@keyframes pul{from{filter:drop-shadow(0 0 8px #5fffb0)}to{filter:drop-shadow(0 0 26px #5fffb0)}}
+.big .slot{width:56px;height:56px;border-color:#2a9a6a;box-shadow:0 0 12px #5fffb088}.big .slot svg{width:44px;height:44px}
+.st{position:fixed;width:2px;height:2px;background:#fff;border-radius:50%;animation:twk 3s infinite;pointer-events:none}@keyframes twk{50%{opacity:.15}}
+.cl{position:fixed;width:140px;height:30px;border-radius:30px;background:#cfe0ee26;filter:blur(7px);animation:drift 60s linear infinite;pointer-events:none}@keyframes drift{from{left:-160px}to{left:100%}}
+.pop{position:fixed;z-index:40;pointer-events:none;font-size:20px;color:#fff3a0;text-shadow:0 2px 0 #000;animation:up 1s ease-out forwards}@keyframes up{to{transform:translateY(-60px);opacity:0}}
+.card.rare{border-color:#e6b94a;box-shadow:0 0 14px #e6b94a99,0 3px 0 #8a6a35;background:linear-gradient(#fff6cf,#f2dc8a)}
+.lockp{text-align:center;padding:14px;opacity:.8}
+.btn:hover:not(:disabled){filter:brightness(1.18)}
+#cds{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px}
+.cc{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px;border-radius:14px;border:2px dashed transparent;cursor:pointer}
+.cc.act{border-color:#b8873a;background:#ffffff44}
+.cc .cz{width:170px}.cc.big .cz{width:210px}
+.card{position:relative;transition:transform .2s}.card:hover{transform:translateY(-4px) rotate(-1deg)}
+.card::before{content:"";position:absolute;inset:5px;border:1px dashed #a8844a99;border-radius:10px;pointer-events:none}
+.card svg,.card .ico{width:78px;height:78px;padding:8px;border-radius:50%;background:radial-gradient(#fffbe2,#e6cf94);box-shadow:inset 0 0 0 3px #c9a45a,0 3px 0 #8a6a35}
+.card .ico{display:grid;place-items:center;font-size:40px;padding:0}
+.card>small{background:#6b3f17;color:#ffe9a8;border-radius:10px;padding:0 9px;opacity:1}.card.up>small{background:none;color:inherit;opacity:.85}
+.pips{color:#b8741a;letter-spacing:3px}
+.pot{background:#ffffff33;border:1px solid #a8844a66;border-radius:10px;padding:3px 8px;margin-bottom:5px}
+.rg,#gri{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px}.rg{margin-top:12px}
+.stall{margin-top:14px}.stall::before{content:"";position:absolute;left:-5px;right:-5px;top:-20px;height:24px;border-radius:14px 14px 0 0;background:repeating-linear-gradient(90deg,#b8322a 0 28px,#f4e6c0 28px 56px);border:3px solid #2a1a0a;border-bottom:0}.stall::after{content:""}
+#ups{border-color:#5a5a64}#book{border-color:#4a2a5a;box-shadow:inset 0 0 36px #8a5ab088,0 6px 0 #1b0f05,0 0 26px #b05ad666}
+</style></head><body>
+<div class="moon"></div>
+<header><h1>🍄 Bruma-Verde</h1><div class="stats"><div class="pill">🪙 <b id="coins">0</b> <span id="goal"></span></div><button class="btn s" id="lore">Lore</button></div></header>
+<svg id="scene" viewBox="0 0 1000 110" preserveAspectRatio="none"></svg>
+<main>
+<div class="col">
+ <div class="panel"><h2>Jardim da Cabana</h2><div class="garden" id="garden"></div>
+ <p class="hint">Escolha uma semente da sacola, plante num canteiro vazio e colha quando brilhar. Cada colheita rende vários ingredientes!</p></div>
+ <div class="panel"><h2>Sacola de Sementes</h2><div class="chips" id="bag"></div></div>
+</div>
+<div class="col">
+ <div class="panel"><h2 id="ct">Caldeirão</h2><div class="cauldron" id="cd">
+  <div class="slots" id="slots"></div>
+  <svg class="cz" viewBox="0 0 160 120" width="200"><g class="flame"><path d="M50 112c-8-12 4-18 0-30 10 6 14 18 8 30zM80 112c-10-16 6-24 0-40 14 8 18 24 10 40zM110 112c-8-12 4-18 0-30 10 6 14 18 8 30z" fill="#ff9d2e"/></g><path d="M22 52c-6 30 12 52 58 52s64-22 58-52z" fill="#2a2a32" stroke="#111" stroke-width="3"/><ellipse cx="80" cy="52" rx="58" ry="14" fill="#15151a"/><ellipse id="liq" cx="80" cy="52" rx="50" ry="10" fill="#4fae5a"/><g id="bubs"></g><path d="M22 54c-10 0-12 8-4 10M138 54c10 0 12 8 4 10" stroke="#111" stroke-width="4" fill="none"/><path d="M40 70c4 14 10 22 20 26" stroke="#fff3" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+  <div><button class="btn" id="brew" disabled>Ferver</button> <button class="btn s" id="clear">Esvaziar</button></div>
+ </div>
+ <p class="hint">Toque num caldeirão para escolhê-lo e nos ingredientes para colocá-los nele.</p><div class="chips" id="inv"></div></div>
+ <div class="panel"><h2>Poções Prontas</h2><div id="pots"></div></div>
+</div>
+<div class="panel wide stall"><h2>⚖ Mercado de Bruma-Verde</h2><div class="shop" id="shop"></div></div>
+<div class="panel wide" id="ups"></div>
+<div class="panel wide" id="book"></div>
+<div class="panel wide"><h2>📖 Grimório de Receitas</h2><div id="gri" class="small"></div></div>
+</main>
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="panel"><h2>A Aprendiz de Bruma-Verde</h2>
+<p>Entre pinheiros e névoa fica a vila de Bruma-Verde. A velha alquimista <b>Morwen</b> partiu em busca do lendário <b>Cogumelo-Rei</b> e deixou a você a cabana, o caldeirão e um bilhete:</p>
+<p><i>“Plante, ferva, descubra. A bruma ensina a quem tem paciência.”</i></p>
+<p>Junte <b>600 moedas</b> vendendo poções para reabrir a Torre do Alquimista.</p>
+<button class="btn" id="go">Começar</button></div></div>
+<script>
+const $=s=>document.querySelector(s),S=b=>`<svg viewBox="0 0 48 48">${b}</svg>`,SH='<ellipse cx="24" cy="44" rx="12" ry="3" fill="#0003"/>';
+const M=(c,s,d,st,g='')=>S(`${g}${SH}<path d="M19 26h10l2 16H17z" fill="${st}" stroke="#8a6a35" stroke-width="1.5"/><path d="M5 30C6 8 42 8 43 30Q24 23 5 30Z" fill="${c}" stroke="${s}" stroke-width="2"/><circle cx="16" cy="21" r="3" fill="${d}"/><circle cx="27" cy="16" r="3.5" fill="${d}"/><circle cx="35" cy="25" r="2.5" fill="${d}"/><circle cx="21.5" cy="35" r="1.4" fill="#3b2a14"/><circle cx="27.5" cy="35" r="1.4" fill="#3b2a14"/><circle cx="19" cy="38" r="1.6" fill="#f59a9a" opacity=".8"/><circle cx="30" cy="38" r="1.6" fill="#f59a9a" opacity=".8"/>`);
+const gl=c=>`<circle cx="24" cy="22" r="21" fill="${c}" opacity=".28"/>`;
+const IC={
+rubro:M('#c0392b','#6e1a12','#fff','#f3e6c9'),
+lua:M('#9cc4ef','#3d6a9e','#e9f6ff','#e9f1fb',gl('#9cc4ef')),
+ouro:M('#e3a82b','#8a5f0f','#f6d36b','#f0cf72'),
+musgo:M('#8a5a34','#4a2c14','#c89a6a','#f1e0bd'),
+fant:M('#f4f4fa','#9a9ab0','#d8d8ea','#fff',gl('#ffffff')),
+brasa:M('#e8662a','#7a2a0a','#ffd24a','#f0c9a0',gl('#ff9d2e')),
+lav:S(SH+'<path d="M24 44V18M15 44L13 22M33 44L35 22" stroke="#4f7a3a" stroke-width="2.5" fill="none" stroke-linecap="round"/><g fill="#9b6fd6" stroke="#5f3a9a"><ellipse cx="24" cy="14" rx="3.5" ry="7"/><ellipse cx="13" cy="18" rx="3" ry="6"/><ellipse cx="35" cy="18" rx="3" ry="6"/></g>'),
+trev:S(SH+'<path d="M24 44V28" stroke="#3d7a30" stroke-width="3" stroke-linecap="round"/><g fill="#5aa24a" stroke="#2f6a26" stroke-width="1.5"><circle cx="24" cy="14" r="8"/><circle cx="14" cy="26" r="8"/><circle cx="34" cy="26" r="8"/></g><circle cx="24" cy="23" r="3" fill="#c8f0a0"/>'),
+esp:S(SH+'<path d="M8 42C14 30 20 24 38 10" stroke="#3a2a30" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M16 33l-5-2M22 27l-3-5M29 20l-1-5M12 38l-5 1" stroke="#3a2a30" stroke-width="2.5" stroke-linecap="round"/><g fill="#d6303a" stroke="#7a1218"><circle cx="30" cy="25" r="4"/><circle cx="20" cy="36" r="3.5"/><circle cx="36" cy="14" r="3.5"/></g>'),
+salv:S(SH+'<path d="M24 44V16" stroke="#5d7a50" stroke-width="3"/><g fill="#9dbf96" stroke="#4d6a45" stroke-width="1.5"><ellipse cx="15" cy="23" rx="6" ry="10" transform="rotate(-30 15 23)"/><ellipse cx="33" cy="23" rx="6" ry="10" transform="rotate(30 33 23)"/><ellipse cx="24" cy="14" rx="5" ry="9"/></g>'),
+gelo:S(SH+'<path d="M24 44V26" stroke="#4a8a6a" stroke-width="3"/><g fill="#bfe6ff" stroke="#5a9ac8" stroke-width="1.5"><circle cx="24" cy="11" r="6"/><circle cx="16" cy="17" r="6"/><circle cx="32" cy="17" r="6"/><circle cx="19" cy="25" r="6"/><circle cx="29" cy="25" r="6"/></g><circle cx="24" cy="19" r="4" fill="#fff"/>'),
+mand:S(SH+'<g fill="#4f9a3a" stroke="#2f6a26"><path d="M24 20C18 12 14 8 10 6c8-1 11 5 14 14zM24 20c2-8 6-14 14-14-2 5-6 9-14 14z"/></g><path d="M16 22c0-4 16-4 16 0 0 10-3 20-8 20s-8-10-8-20z" fill="#e8c99a" stroke="#8a6a35" stroke-width="2"/><circle cx="21" cy="29" r="1.6" fill="#3b2a14"/><circle cx="27" cy="29" r="1.6" fill="#3b2a14"/><path d="M22 34q2 2 4 0" stroke="#3b2a14" fill="none" stroke-width="1.5"/>'),
+sol:S(SH+'<path d="M24 44V27" stroke="#4f8a3a" stroke-width="3"/><g fill="#ffd23a" stroke="#c88a0a" stroke-width="1.5"><circle cx="24" cy="7" r="5"/><circle cx="33" cy="11" r="5"/><circle cx="37" cy="20" r="5"/><circle cx="33" cy="29" r="5"/><circle cx="15" cy="29" r="5"/><circle cx="11" cy="20" r="5"/><circle cx="15" cy="11" r="5"/></g><circle cx="24" cy="20" r="8" fill="#7a4a1a" stroke="#4a2a0a" stroke-width="1.5"/><circle cx="21" cy="19" r="1.3" fill="#fff"/><circle cx="27" cy="19" r="1.3" fill="#fff"/>'),
+cristal:M('#7fe8e0','#2a8a8a','#e0ffff','#e8ffff',gl('#7fe8e0')),
+rosa:S(SH+'<path d="M24 44V26" stroke="#2a5a30" stroke-width="3"/><path d="M24 37l8-4M24 33l-8-3" stroke="#2a5a30" stroke-width="2.5"/><circle cx="24" cy="17" r="11" fill="#5a1a6a" stroke="#2a0a3a" stroke-width="1.5"/><path d="M24 17m-6 0a6 6 0 1 1 12 0a4 4 0 1 1-8 0a2 2 0 1 1 4 0" fill="none" stroke="#c06ae6" stroke-width="2"/>'),
+rei:M('#f2c230','#7a4a0a','#fff3b0','#fff0c0',gl('#ffd24a')+'<path d="M14 12l2-9 5 5 3-8 3 8 5-5 2 9z" fill="#ffd24a" stroke="#a8741f" stroke-width="1.5"/>')};
+// nome, preço da semente, segundos p/ crescer, rendimento, tipo
+const ING={lav:['Lavanda da Bruma',3,6,3,'🌿'],trev:['Trevo-de-Fada',4,7,3,'🌿'],salv:['Sálvia Prateada',5,8,3,'🌿'],esp:['Espinheira Rubra',6,9,3,'🌿'],rubro:['Cogumelo Rubro',6,8,2,'🍄'],musgo:['Chapéu-de-Musgo',7,9,2,'🍄'],ouro:['Cantarelo Dourado',9,10,2,'🍄'],lua:['Orelha-de-Lua',12,12,2,'🍄'],gelo:['Flor-de-Gelo',12,12,2,'🌿'],brasa:['Cogumelo-Brasa',14,12,2,'🍄'],fant:['Cogumelo-Fantasma',16,14,2,'🍄'],mand:['Mandrágora',18,15,2,'🌿'],sol:['Girassol-Solar',30,18,2,'🌿',1],cristal:['Cogumelo-Cristal',40,20,2,'🍄',1],rosa:['Rosa-Negra',45,22,2,'🌿',1],rei:['Cogumelo-Rei',120,30,1,'👑',1]};
+const POT={cor:['Poção de Coragem','#e0533b',24],sono:['Poção do Sono','#7b6fd6',26],sorte:['Poção da Sorte','#58c25a',30],visao:['Visão Noturna','#4fc3d9',40],fogo:['Sopro de Dragão','#f08a24',30],cura:['Tônico de Cura','#e86fa6',20],veu:['Véu da Invisibilidade','#b9c2d4',50],vigor:['Elixir de Vigor','#e3c12b',34],calma:['Poção da Calma','#8fd6b0',28],urso:['Força de Urso','#a8683a',32],frio:['Sopro Gélido','#9ad8ff',38],chama:['Chama Eterna','#ff6a3a',44],alma:['Essência Espectral','#e8e8ff',62],grito:['Grito da Mandrágora','#b05ad6',80],raiz:['Raiz Vital','#7aa04a',58],nevoa:['Névoa Dançante','#c8d4e0',52],turva:['Mistura Turva','#6b5a3a',7],ambar:['Elixir Âmbar','#f0a020',70],lunar:['Orvalho Lunar','#a8d4ff',75],solar:['Luz do Meio-Dia','#ffe45a',95],sonho:['Sonho Lúcido','#9a8aff',140],dragao:['Fúria de Dragão','#ff4a2a',170],arcano:['Cristal Arcano','#7fe8e0',230],noite:['Beijo da Noite','#7a2a9a',220],vida:['Elixir da Longa Vida','#5adc8a',330],rei:['Néctar do Cogumelo-Rei','#ffd24a',600]};
+const K=(a,b)=>[a,b].sort().join('+'),REC={};
+[['rubro','lav','cor'],['lua','lav','sono'],['ouro','trev','sorte'],['lua','ouro','visao'],['esp','rubro','fogo'],['lav','trev','cura'],['esp','lua','veu'],['ouro','rubro','vigor'],['salv','lav','calma'],['musgo','rubro','urso'],['gelo','salv','frio'],['brasa','esp','chama'],['fant','lua','alma'],['mand','fant','grito'],['musgo','mand','raiz'],['gelo','brasa','nevoa']].forEach(r=>REC[K(r[0],r[1])]=r[2]);
+const KK=a=>[...a].sort().join('+'),BOOKK={};
+const BR=[[['ouro','brasa'],'ambar',120],[['lua','gelo'],'lunar',140],[['sol','ouro'],'solar',180],[['lua','lav','salv'],'sonho',260],[['brasa','esp','rubro'],'dragao',320],[['cristal','lua','gelo'],'arcano',420],[['rosa','esp','fant'],'noite',400],[['mand','lua','salv','trev'],'vida',650],[['rei','mand','fant','brasa'],'rei',1000]];
+BR.forEach(r=>{const k=KK(r[0]);REC[k]=r[1];BOOKK[k]=r[2]});
+function renderBook(card){const b=$('#book');if(!G.big){b.innerHTML='<h2>📕 Livro Antigo</h2><p class="lockp">🔒 Selado por magia. Junte 🪙 1000 para abrir o livro e o Grande Caldeirão.</p>';return}
+b.innerHTML='<h2>📕 Livro Antigo de Morwen</h2><p class="hint" style="text-align:center">Receitas secretas só funcionam depois de compradas. As de 3 e 4 ingredientes pedem o Grande Caldeirão.</p><div class="shop">'+Object.keys(ING).filter(k=>ING[k][5]).map(card).join('')+'</div><div class="rg">'+BR.map(r=>{const k=KK(r[0]),p=POT[r[1]],o=G.books[k];return `<div class="pot${o?'':' lk'}">${bottle(p[1])}<span>${p[0]}<br><small>${o?r[0].map(x=>ING[x][0]).join(' + '):r[0].length+' ingredientes · vale 🪙 '+p[2]}</small></span>${o?'<small>✔ aprendida</small>':`<button class="btn s" data-rec="${k}">🪙 ${r[2]}</button>`}</div>`}).join('')+'</div>'}
+const bottle=c=>S(`<rect x="19" y="3" width="10" height="7" rx="2" fill="#8a5a2a"/><path d="M20 10h8v8l10 14c4 8-1 14-9 14H19c-8 0-13-6-9-14l10-14z" fill="#ffffff22" stroke="#f5efe0" stroke-width="2"/><path d="M13 32h22l3 4c3 6-1 8-9 8H19c-8 0-12-2-9-8z" fill="${c}"/><circle cx="20" cy="38" r="2" fill="#fff8"/><path d="M15 26l-2 5" stroke="#fff8" stroke-width="2" stroke-linecap="round"/>`);
+let G={coins:50,inv:{},seeds:{rubro:2,lav:3,trev:2},pots:{},np:4,plots:Array(9).fill(null),sel:'lav',known:{},cauld:[]};
+try{const s=JSON.parse(localStorage.getItem('brumaverde2'));if(s)G=s}catch(e){}
+G.books=G.books||{};G.cs=G.cs||[{i:G.cauld||[],b:0}];G.cs.forEach(c=>c.b=c.r=0);G.ac=G.ac||0;G.up=G.up||{a:0,l:0,c:0};const gt=id=>ING[id][2]*1000*Math.pow(.88,G.up.a);const UP={a:{n:'Adubo Mágico',i:'🌱',d:'Plantas crescem 12% mais rápido por nível',c:[60,120,240,480,900]},l:{n:'Lenha de Carvalho',i:'🪵',d:'Fervura mais rápida por nível',c:[50,100,200,400,800]},c:{n:'Cesta Encantada',i:'🧺',d:'+1 ingrediente em toda colheita',c:[300,900]}},NC=[150,450];const save=()=>{try{localStorage.setItem('brumaverde2',JSON.stringify(G))}catch(e){}};
+let tt,cx=0,cy=0;const pop=(x,y,t)=>{const d=document.createElement('div');d.className='pop';d.textContent=t;d.style.left=x+'px';d.style.top=y+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),1000)};
+const modal=(h,p)=>{$('#modal').style.display='grid';$('#modal .panel').innerHTML='<h2>'+h+'</h2><p>'+p+'</p><button class="btn" id="go">Continuar</button>'};
+const toast=(m,p)=>{if(p)pop(cx,cy,p);const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2200)};
+const cost=n=>[40,60,90,130,180][n-4];
+let last='';
+function plots(){const h=G.plots.map((p,i)=>{if(i>=G.np)return `<div class="plot lock" data-i="${i}"><div><b>🔒</b>Canteiro<br>🪙 ${cost(i)}</div></div>`;
+ let c='plot',x='<div class="mound"></div>';
+ if(p){const pr=Math.min(1,(Date.now()-p.t)/gt(p.id)),sc=pr<.4?.4:pr<1?.7:1.05;if(pr>=1)c+=' ready';
+ x+=`<div class="pl" style="transform:scale(${sc})">${IC[p.id]}</div>`+(pr<1?`<div class="bar"><i style="width:${Math.floor(pr*20)*5}%"></i></div>`:'')}
+ return `<div class="${c}" data-i="${i}">${x}</div>`}).join('');
+ if(h!==last){last=h;$('#garden').innerHTML=h}}
+function ui(){$('#coins').textContent=G.coins;
+ const sk=Object.keys(G.seeds).filter(k=>G.seeds[k]>0);
+ $('#bag').innerHTML=sk.length?sk.map(k=>`<button class="chip${G.sel==k?' sel':''}" data-seed="${k}">${IC[k]}<span>${ING[k][0]}<br><small>× ${G.seeds[k]}</small></span></button>`).join(''):'<p class="small">Sacola vazia. Compre sementes no mercado!</p>';
+ $('#inv').innerHTML=Object.keys(ING).filter(k=>G.inv[k]>0).map(k=>`<button class="chip" data-add="${k}">${IC[k]}<span>× ${G.inv[k]}</span></button>`).join('')||'<p class="small">Colha ingredientes no jardim.</p>';
+ if(G.coins>=1000&&!G.big){G.big=1;modal('Grande Caldeirão desbloqueado!','Uma porta lacrada da Torre se abre e revela o Grande Caldeirão e o Livro Antigo de Morwen. Agora cabem até 4 ingredientes, e há receitas e sementes raras à venda. Prepare o Néctar do Cogumelo-Rei!')}
+ renderCds();$('#goal').textContent=!G.won?'/ 600':!G.big?'/ 1000':'· 👑 Néctar do Rei';
+ 
+ const pk=Object.keys(G.pots).filter(k=>G.pots[k]>0);
+ $('#pots').innerHTML=pk.length?pk.map(k=>`<div class="pot">${bottle(POT[k][1])}<span>${POT[k][0]} × ${G.pots[k]}<br><small>🪙 ${POT[k][2]} cada</small></span><button class="btn s" data-sell="${k}">1</button><button class="btn s" data-sell="${k}" data-all="1">Tudo</button></div>`).join(''):'<p class="small">Nenhuma poção ainda. Ferva algo!</p>';
+ const card=k=>{const d=ING[k];return `<div class="card${d[5]?' rare':''}">${IC[k]}<b>${d[0]}</b><span class="tag">${d[4]} rende ${d[3]} · ${d[2]}s</span><small>🪙 ${d[1]} a semente</small><div><button class="btn s" data-buy="${k}" data-n="1">+1</button><button class="btn s" data-buy="${k}" data-n="5">+5</button></div></div>`};$('#shop').innerHTML=Object.keys(ING).filter(k=>!ING[k][5]).map(card).join('');renderBook(card);renderUps();
+ $('#gri').innerHTML=Object.keys(REC).filter(k=>!BOOKK[k]||G.books[k]).map(k=>{const [a,b]=k.split('+'),o=G.known[k],p=POT[REC[k]];return `<div class="pot${o?'':' lk'}">${bottle(o?p[1]:'#555')}<span>${o?p[0]+' · '+k.split('+').map(x=>ING[x][0]).join(' + '):'??? · dica: leva '+ING[a][0]}</span><small>🪙 ${p[2]}</small></div>`}).join('');
+ plots();save()}
+let busy=false;
+document.addEventListener('click',e=>{const t=e.target.closest('[data-i],[data-seed],[data-add],[data-sell],[data-buy],[data-rec],[data-sl],[data-brew],[data-clr],[data-ac],[data-up],[data-nc],#lore,#go');if(!t)return;cx=e.clientX;cy=e.clientY;
+ if(t.dataset.seed)G.sel=t.dataset.seed;
+ else if(t.dataset.ac!==undefined)G.ac=+t.dataset.ac;
+ else if(t.dataset.up){const u=UP[t.dataset.up],l=G.up[t.dataset.up];if(l>=u.c.length)return;if(G.coins<u.c[l])return toast('Custa 🪙 '+u.c[l]);G.coins-=u.c[l];G.up[t.dataset.up]++;toast(u.n+' melhorado!','⬆ ✦')}
+ else if(t.dataset.nc!==undefined){const l=G.cs.length;if(l>=3)return;if(G.coins<NC[l-1])return toast('Custa 🪙 '+NC[l-1]);G.coins-=NC[l-1];G.cs.push({i:[],b:0});G.ac=l;toast('Novo caldeirão!','🔥 ✦')}
+ else if(t.dataset.rec){const k=t.dataset.rec,pr=BOOKK[k];if(G.coins<pr)return toast('Receita custa 🪙 '+pr);G.coins-=pr;G.books[k]=1;G.known[k]=1;toast('Receita aprendida!','📖 ✦')}
+ else if(t.dataset.buy){const k=t.dataset.buy,n=+t.dataset.n,c=ING[k][1]*n;if(G.coins<c)return toast('Moedas insuficientes.');G.coins-=c;G.seeds[k]=(G.seeds[k]||0)+n;G.sel=k;toast(n+'× '+ING[k][0]+' (semente)')}
+ else if(t.dataset.i!==undefined){const i=+t.dataset.i,p=G.plots[i];
+  if(i>=G.np){const c=cost(i);if(G.coins<c)return toast('Novo canteiro custa 🪙 '+c);G.coins-=c;G.np++;toast('Canteiro desbloqueado!')}
+  else if(!p){if(!(G.seeds[G.sel]>0))return toast('Escolha uma semente da sacola.');G.seeds[G.sel]--;G.plots[i]={id:G.sel,t:Date.now()}}
+  else if(Date.now()-p.t>=gt(p.id)){const y=ING[p.id][3]+G.up.c;G.inv[p.id]=(G.inv[p.id]||0)+y;G.plots[i]=null;toast('Colheu '+y+'× '+ING[p.id][0]+'!','+'+y+' ✦')}
+  else toast('Ainda está crescendo…')}
+ else if(t.dataset.add){const c=G.cs[G.ac];if(c.i.length<(G.big?4:2)&&!c.b){G.inv[t.dataset.add]--;c.i.push(t.dataset.add)}}
+ else if(t.dataset.sl!==undefined||t.dataset.clr!==undefined){const k=+(t.dataset.c??t.dataset.clr),c=G.cs[k];if(c.b)return;G.ac=k;(t.dataset.sl!==undefined?c.i.splice(+t.dataset.sl,1):c.i.splice(0)).forEach(x=>G.inv[x]=(G.inv[x]||0)+1)}
+ else if(t.dataset.sell){const k=t.dataset.sell,n=t.dataset.all?G.pots[k]:1;G.pots[k]-=n;G.coins+=POT[k][2]*n;toast('Vendeu por 🪙 '+POT[k][2]*n,'+🪙'+POT[k][2]*n);
+  if(G.coins>=600&&!G.won){G.won=1;$('#modal').style.display='grid';$('#modal .panel').innerHTML='<h2>A Torre Reabriu!</h2><p>Com 600 moedas, as portas da Torre do Alquimista se abrem e Morwen sorri de longe. Mas há uma porta lacrada no fundo da torre… junte 🪙 1000 para abri-la.</p><button class="btn" id="go">Continuar</button>'}}
+ else if(t.dataset.brew!==undefined){const c=G.cs[+t.dataset.brew];if(c.b||c.i.length<2)return;c.b=1;G.ac=+t.dataset.brew;const ky=KK(c.i),r=REC[ky]&&(!BOOKK[ky]||G.books[ky])?REC[ky]:'turva';c.r=POT[r][1];
+  setTimeout(()=>{c.b=0;c.i=[];c.r=0;G.pots[r]=(G.pots[r]||0)+1;if(r!='turva'&&!G.known[ky]){G.known[ky]=1;toast('Nova receita: '+POT[r][0]+'!')}else toast('Preparou: '+POT[r][0],'✦');if(r=='rei'&&!G.end){G.end=1;modal('O Cogumelo-Rei Desperta!','O Néctar brilha no caldeirão e Morwen surge da bruma, sorrindo: “Sabia que a bruma ensinaria você.” Fim da jornada principal, mas o jardim é seu para sempre.')}ui()},Math.max(500,1700-250*G.up.l))}
+ else if(t.id=='lore'){$('#modal').style.display='grid';return}
+ else if(t.id=='go'){$('#modal').style.display='none';return}
+ ui()});
+let sc='<defs><linearGradient id="h" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f4a36"/><stop offset="1" stop-color="#143324"/></linearGradient></defs><path d="M0 70Q250 30 500 65T1000 55V110H0z" fill="#1b3d2e"/>';
+for(let i=0;i<26;i++){const x=i*40+(i%3)*8,h=38+(i*37%30);sc+=`<path d="M${x} 100l12-${h}l12 ${h}zM${x+2} 100l10-${h*.6+14}l10 ${h*.6+14}z" fill="#10281d"/>`}
+sc+='<g transform="translate(120 52)"><rect x="0" y="22" width="46" height="30" fill="#6b4a2a"/><path d="M-6 24L23 2l29 22z" fill="#8a3a2a"/><rect x="18" y="32" width="10" height="20" rx="5" fill="#2a1a0a"/><rect x="34" y="28" width="8" height="8" fill="#ffd96a"/><rect x="36" y="4" width="7" height="14" fill="#5a4a3a"/></g><path d="M0 100Q300 78 600 96T1000 90V110H0z" fill="url(#h)"/>';
+$('#scene').innerHTML=sc;
+for(let i=0;i<50;i++){const s=document.createElement('div');s.className='st';s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*40}%;animation-delay:${-Math.random()*3}s`;document.body.appendChild(s)}
+[0,1,2].forEach(i=>{const c=document.createElement('div');c.className='cl';c.style.cssText=`top:${50+i*25}px;animation-delay:${-i*20}s;animation-duration:${50+i*15}s`;document.body.appendChild(c)});
+for(let i=0;i<12;i++){const f=document.createElement('div');f.className='ff';f.style.cssText=`left:${Math.random()*100}%;top:${20+Math.random()*75}%;animation-delay:${-Math.random()*9}s;animation-duration:${6+Math.random()*6}s`;document.body.appendChild(f)}
+if(G.known&&(Object.keys(G.known).length||G.coins!=50))$('#modal').style.display='none';
+function renderCds(){const n=G.big?4:2;$('#ct').textContent=G.cs.length>1?'Caldeirões':G.big?'Grande Caldeirão':'Caldeirão';$('#cds').innerHTML=G.cs.map((c,k)=>{const bub=c.b?[0,1,2,3,4].map(i=>`<circle class="bubble" cx="${50+i*14}" cy="50" r="${3+i%2*2}" fill="#fff8" style="animation-delay:${i*.2}s"/>`).join(''):'';
+return `<div class="cc${G.ac==k?' act':''}${G.big?' big':''}" data-ac="${k}"><b class="t">${G.big?'Grande Caldeirão':'Caldeirão'} ${k+1}</b><div class="slots">${Array.from({length:n},(_,i)=>(i?'<span class="t">+</span>':'')+`<div class="slot" data-sl="${i}" data-c="${k}">${c.i[i]?IC[c.i[i]]:''}</div>`).join('')}</div>${CZ.replace('fill="#4fae5a"',`fill="${c.r||'#4fae5a'}"`).replace('<g id="bubs"></g>',`<g>${bub}</g>`)}<div><button class="btn" data-brew="${k}" ${c.b||c.i.length<2?'disabled':''}>${c.b?'Fervendo…':'Ferver'}</button> <button class="btn s" data-clr="${k}">Esvaziar</button></div></div>`}).join('')}
+function renderUps(){const pp=(l,m)=>'●'.repeat(l)+'○'.repeat(m-l);$('#ups').innerHTML='<h2>🔨 Oficina de Melhorias</h2><p class="hint" style="text-align:center">Melhorias valem para sempre!</p><div class="shop">'+Object.keys(UP).map(k=>{const u=UP[k],l=G.up[k],m=u.c.length;return `<div class="card up"><div class="ico">${u.i}</div><b>${u.n}</b><small>${u.d}</small><div class="pips">${pp(l,m)}</div>${l>=m?'<span class="tag">Máximo</span>':`<button class="btn s" data-up="${k}">🪙 ${u.c[l]}</button>`}</div>`}).join('')+(()=>{const l=G.cs.length;return `<div class="card up"><div class="ico">🍲</div><b>Novo Caldeirão</b><small>Ferva várias poções ao mesmo tempo</small><div class="pips">${pp(l,3)}</div>${l>=3?'<span class="tag">Máximo</span>':`<button class="btn s" data-nc="1">🪙 ${NC[l-1]}</button>`}</div>`})()+'</div>'}
+const CZ=$('.cz').outerHTML;$('#cd').outerHTML='<div id="cds"></div>';
+ui();setInterval(plots,500);
+</script></body></html>
